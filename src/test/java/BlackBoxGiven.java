@@ -163,7 +163,7 @@ public class BlackBoxGiven {
         assertEquals( 0, game.dealDamage(b));
     }
 
-    // take damage when protection is full (10)
+    // take damage when protection is full (10) and damage < Protection
     // equivalence partition 1 <= Protection < 9
     @Test
     public void takenDamageProtectionGreaterThanDamage() {
