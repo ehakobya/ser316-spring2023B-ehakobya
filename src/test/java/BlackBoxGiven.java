@@ -45,31 +45,47 @@ public class BlackBoxGiven {
 
 
     // normal experience when healthy
+    // equivalence partition 10 <= health <= 100
     @Test
     public void dealtDamageNormalExperience() {
-        Wizard wiz = new Wizard();
-        Barbarian bar = new Barbarian();
-        Bard bard = new Bard();
-        Druid dru = new Druid();
-        Ranger ran = new Ranger();
-        Rogue ro = new Rogue();
-        
-        game.dealDamage(wiz);
-        assertEquals(wiz.experience, 5);
 
-        game.dealDamage(bar);
-        assertEquals(bar.experience, 10);
+        Barbarian b = new Barbarian();
+        // Boundary Value: 100 (upper boundary)
+        game.dealDamage(b); // deal some damage
+        assertEquals(100, b.health);
+        assertEquals(10, b.experience);
+        assertEquals(10, game.dealDamage(b));
 
-        game.dealDamage(bard);
-        assertEquals(bard.experience, 6);
+        // Boundary Value: 99 (one below upper boundary)
+        b.health = 99; // set health to boundary value
+        b.experience = 0; // reset experience
+        game.dealDamage(b);
+        assertEquals(99, b.health);
+        assertEquals(10, b.experience);
+        assertEquals( 10, game.dealDamage(b));
 
-        game.dealDamage(dru);
-        assertEquals(dru.experience, 7);
+        // Boundary Value: 50 (middle)
+        b.health = 50; // set health to boundary value
+        b.experience = 0; // reset experience
+        game.dealDamage(b);
+        assertEquals(50, b.health);
+        assertEquals(10, b.experience);
+        assertEquals( 10, game.dealDamage(b));
 
-        game.dealDamage(ran);
-        assertEquals(ran.experience, 8);
+        // Boundary Value: 11 (one above lower boundary)
+        b.health = 11; // set health to boundary value
+        b.experience = 0; // reset experience
+        game.dealDamage(b);
+        assertEquals(11, b.health);
+        assertEquals(10, b.experience);
+        assertEquals( 10, game.dealDamage(b));
 
-        game.dealDamage(ro);
-        assertEquals(ro.experience, 5);
+        // Boundary Value: 10 (lower boundary)
+        b.health = 10; // set health to boundary value
+        b.experience = 0; // reset experience
+        game.dealDamage(b);
+        assertEquals(10, b.health);
+        assertEquals(10, b.experience);
+        assertEquals( 10, game.dealDamage(b));
     }
 }
