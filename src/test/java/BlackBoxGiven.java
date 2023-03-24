@@ -198,4 +198,33 @@ public class BlackBoxGiven {
         assertEquals(104, b.health);
         assertEquals(9, b.experience);
     }
+
+    // take damage when protection <= damage
+    // equivalence partition protection(10) <= 10
+    @Test
+    public void takenDamageProtectionLessThanDamage() {
+
+        Barbarian b = new Barbarian();
+
+        // Boundary Value: 50 (upper boundary - extreme case)
+        b.health = 100;
+        b.experience = 0; // reset experience
+        game.takeDamage(b, 50); // take damage by boundary value
+        assertEquals(60, b.health); // 100 - ((50 - 10) / 2)
+        assertEquals(20, b.experience);
+
+        // Boundary Value: 11 (one above lower boundary)
+        b.health = 100;
+        b.experience = 0; // reset experience
+        game.takeDamage(b, 11);
+        assertEquals(99, b.health); // 100 - ((11 - 10) / 2)
+        assertEquals(0, b.experience);
+
+        // Boundary Value: 10 (lower boundary)
+        b.health = 100;
+        b.experience = 0; // reset experience
+        game.takeDamage(b, 10);
+        assertEquals(100, b.health);
+        assertEquals(0, b.experience);
+    }
 }
