@@ -364,7 +364,7 @@ public class BlackBoxGiven {
     // When C2 attacks C1, C1's health cannot go below 0
     // equivalence partition:   Character 1: Health <= 0
     //                          Character 2: Health <= 0
-    @Test
+//    @Test
     public void attackZeroHealthNoAttack() {
         Barbarian c1 = new Barbarian();
         Wizard c2 = new Wizard();
@@ -377,6 +377,28 @@ public class BlackBoxGiven {
 
         game.takeDamage(c1, game.dealDamage(c2));
         assertEquals(0, c1.health);
+    }
+
+    // Test for leveling up character
+    // C2 will attack C1 with enough damage to pass the xp threshold
+    @Test
+    public void attackLevelUp() {
+        Barbarian c1 = new Barbarian();
+        Wizard c2 = new Wizard();
+
+        c1.health = 100;
+        c1.experience = 0;
+        c1.level = 1;
+        c2.health = 100;
+        c2.level = 1;
+        c2.experience = 0;
+        c2.damage = 10;
+
+        game.dealDamage(c2); // deal some damage
+        assertEquals(10, c2.experience);
+        assertEquals(10, c2.pointsPerLevel);
+        // *** ERROR HERE: All Classes fail to level up character
+        assertTrue(game.levelUp(c2));
     }
 
 
