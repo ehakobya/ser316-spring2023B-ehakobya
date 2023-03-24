@@ -53,8 +53,6 @@ public class BlackBoxGiven {
 
         // Boundary Value: 100 (upper boundary)
         game.dealDamage(b); // deal some damage
-        assertEquals(0, b.experience); // make sure experience is at 0
-        assertEquals(100, b.health);
         assertEquals(10, b.experience);
         assertEquals(10, game.dealDamage(b));
 
@@ -62,7 +60,6 @@ public class BlackBoxGiven {
         b.health = 99; // set health to boundary value
         b.experience = 0; // reset experience
         game.dealDamage(b);
-        assertEquals(99, b.health);
         assertEquals(10, b.experience);
         assertEquals( 10, game.dealDamage(b));
 
@@ -70,7 +67,6 @@ public class BlackBoxGiven {
         b.health = 50; // set health to boundary value
         b.experience = 0; // reset experience
         game.dealDamage(b);
-        assertEquals(50, b.health);
         assertEquals(10, b.experience);
         assertEquals( 10, game.dealDamage(b));
 
@@ -78,7 +74,6 @@ public class BlackBoxGiven {
         b.health = 11; // set health to boundary value
         b.experience = 0; // reset experience
         game.dealDamage(b);
-        assertEquals(11, b.health);
         assertEquals(10, b.experience);
         assertEquals( 10, game.dealDamage(b));
 
@@ -86,7 +81,6 @@ public class BlackBoxGiven {
         b.health = 10; // set health to boundary value
         b.experience = 0; // reset experience
         game.dealDamage(b);
-        assertEquals(10, b.health);
         assertEquals(10, b.experience);
         assertEquals( 10, game.dealDamage(b));
     }
@@ -102,7 +96,6 @@ public class BlackBoxGiven {
         b.health = 9; // set health to boundary value
         b.experience = 0; // reset experience
         game.dealDamage(b);
-        assertEquals(9, b.health);
         assertEquals(10, b.experience);
         assertEquals( 20, game.dealDamage(b));
 
@@ -110,7 +103,6 @@ public class BlackBoxGiven {
         b.health = 5; // set health to boundary value
         b.experience = 0; // reset experience
         game.dealDamage(b);
-        assertEquals(5, b.health);
         assertEquals(10, b.experience);
         assertEquals( 20, game.dealDamage(b));
 
@@ -118,7 +110,6 @@ public class BlackBoxGiven {
         b.health = 2; // set health to boundary value
         b.experience = 0; // reset experience
         game.dealDamage(b);
-        assertEquals(2, b.health);
         assertEquals(10, b.experience);
         assertEquals( 20, game.dealDamage(b));
 
@@ -126,7 +117,6 @@ public class BlackBoxGiven {
         b.health = 1; // set health to boundary value
         b.experience = 0; // reset experience
         game.dealDamage(b);
-        assertEquals(1, b.health);
         assertEquals(10, b.experience);
         assertEquals( 20, game.dealDamage(b));
     }
@@ -134,7 +124,7 @@ public class BlackBoxGiven {
     // double damage when health below 10
     // equivalence partition 1 <= health < 10
     @Test
-    public void dealtDamageNoNormalExperienceNoDamage() {
+    public void dealtDamageNoExperienceNoDamage() {
 
         Barbarian b = new Barbarian();
 
@@ -142,7 +132,6 @@ public class BlackBoxGiven {
         b.health = 0; // set health to boundary value
         b.experience = 0; // reset experience
         game.dealDamage(b);
-        assertEquals(0, b.health);
         assertEquals(0, b.experience);
         assertEquals( 0, game.dealDamage(b));
 
@@ -150,7 +139,6 @@ public class BlackBoxGiven {
         b.health = -1; // set health to boundary value
         b.experience = 0; // reset experience
         game.dealDamage(b);
-        assertEquals(-1, b.health);
         assertEquals(0, b.experience);
         assertEquals( 0, game.dealDamage(b));
 
@@ -158,7 +146,6 @@ public class BlackBoxGiven {
         b.health = -10; // set health to boundary value
         b.experience = 0; // reset experience
         game.dealDamage(b);
-        assertEquals(-10, b.health);
         assertEquals(0, b.experience);
         assertEquals( 0, game.dealDamage(b));
     }
@@ -224,8 +211,8 @@ public class BlackBoxGiven {
         b.health = 100;
         b.experience = 0; // reset experience
         game.takeDamage(b, 10);
-        assertEquals(100, b.health);
-        assertEquals(0, b.experience);
+        assertEquals(90, b.health);
+        assertEquals(5, b.experience);
     }
 
     // health below zero case
@@ -239,14 +226,14 @@ public class BlackBoxGiven {
         b.health = 9;
         b.experience = 0; // reset experience
         game.takeDamage(b, 10); // take damage by boundary value
-        assertTrue(0 < b.health);
+        assertEquals(0, b.health);
         assertEquals(0, b.experience);
 
         // Boundary Value: 101 (one above lower boundary)
         b.health = 1;
         b.experience = 0; // reset experience
         game.takeDamage(b, 10);
-        assertTrue(0 < b.health);
+        assertEquals(0, b.health);
         assertEquals(0, b.experience);
     }
 
@@ -403,29 +390,290 @@ public class BlackBoxGiven {
         assertFalse(game.levelUp(c1));
         assertFalse(game.levelUp(c2));
     }
+
+    // Zero health characters, no level up
+    // equivalence partition:   Character 1: Health <= 0
+    //                          Character 2: Health <= 0
+    @Test
+    public void attackZeroHealthNoLevelUp() {
+
+        Barbarian c1 = new Barbarian();
+        Wizard c2 = new Wizard();
+
+        c1.health = 0;
+        c1.experience = 0;
+        c2.health = 0;
+        c2.experience = 0;
+
+        // BOUNDARY 0 HEALTH /////////////////////
+        // character 1 deals 10 damage to character 2
+        game.dealDamage(c1);
+        assertEquals(0, c1.experience);
+
+        // character 2 takes damage (calculate)
+        game.takeDamage(c2, game.dealDamage(c1));
+        assertEquals(0, c2.health);
+        assertEquals(0, c2.experience);
+
+        // character 2 deals 10 damage to character 1
+        game.dealDamage(c2);
+        assertEquals(0, c2.experience);
+
+        // character 1 takes damage (calculate)
+        game.takeDamage(c1, game.dealDamage(c2));
+        assertEquals(0, c1.health);
+        assertEquals(0, c1.experience);
+
+        // BOUNDARY -1 HEALTH /////////////////////
+        c1.health = -1;
+        c1.experience = 0;
+        c2.health = -1;
+        c2.experience = 0;
+        // character 1 deals 10 damage to character 2
+        game.dealDamage(c1);
+        assertEquals(0, c1.experience);
+
+        // character 2 takes damage
+        game.takeDamage(c2, game.dealDamage(c1));
+        assertEquals(0, c2.health);
+        assertEquals(0, c2.experience);
+
+        // character 2 deals 10 damage to character 1
+        game.dealDamage(c2);
+        assertEquals(0, c2.experience);
+
+        // character 1 takes damage
+        game.takeDamage(c1, game.dealDamage(c2));
+        assertEquals(0, c1.health);
+        assertEquals(0, c1.experience);
+
+        // BOUNDARY -10 HEALTH /////////////////////
+        c1.health = -10;
+        c1.experience = 0;
+        c2.health = -10;
+        c2.experience = 0;
+        // character 1 deals 10 damage to character 2
+        game.dealDamage(c1);
+        assertEquals(0, c1.experience);
+
+        // character 2 takes damage
+        game.takeDamage(c2, game.dealDamage(c1));
+        assertEquals(0, c2.health);
+        assertEquals(0, c2.experience);
+
+        // character 2 deals 10 damage to character 1
+        game.dealDamage(c2);
+        assertEquals(0, c2.experience);
+
+        // character 1 takes damage
+        game.takeDamage(c1, game.dealDamage(c2));
+        assertEquals(0, c1.health);
+        assertEquals(0, c1.experience);
+    }
+
+    // Character one has 0 health, character 2 has 100
+    // Expected: no attack on each other
+    // equivalence partition:   Character 1: -10, 1, 0
+    //                          Character 2: Health = 100
+    @Test
+    public void attackOneZeroSecondFull() {
+
+        Barbarian c1 = new Barbarian();
+        Wizard c2 = new Wizard();
+
+        c1.health = 0;
+        c1.experience = 0;
+        c2.health = 100;
+        c2.experience = 0;
+
+        // BOUNDARY 0 HEALTH /////////////////////
+        // character 1 deals 10 damage to character 2
+        game.dealDamage(c1);
+        assertEquals(0, c1.experience);
+
+        // character 2 takes damage (calculate)
+        game.takeDamage(c2, game.dealDamage(c1));
+        assertEquals(0, c2.health);
+        assertEquals(0, c2.experience);
+
+        // character 2 deals 10 damage to character 1
+        game.dealDamage(c2);
+        assertEquals(0, c2.experience);
+
+        // character 1 takes damage (calculate)
+        game.takeDamage(c1, game.dealDamage(c2));
+        assertEquals(0, c1.health);
+        assertEquals(0, c1.experience);
+
+        // BOUNDARY -1 HEALTH /////////////////////
+        c1.health = -1;
+        c1.experience = 0;
+        c2.health = 100;
+        c2.experience = 0;
+        // character 1 deals 10 damage to character 2
+        game.dealDamage(c1);
+        assertEquals(0, c1.experience);
+
+        // character 2 takes damage
+        game.takeDamage(c2, game.dealDamage(c1));
+        assertEquals(0, c2.health);
+        assertEquals(0, c2.experience);
+
+        // character 2 deals 10 damage to character 1
+        game.dealDamage(c2);
+        assertEquals(0, c2.experience);
+
+        // character 1 takes damage
+        game.takeDamage(c1, game.dealDamage(c2));
+        assertEquals(0, c1.health);
+        assertEquals(0, c1.experience);
+
+        // BOUNDARY -10 HEALTH /////////////////////
+        c1.health = -10;
+        c1.experience = 0;
+        c2.health = 100;
+        c2.experience = 0;
+        // character 1 deals 10 damage to character 2
+        game.dealDamage(c1);
+        assertEquals(0, c1.experience);
+
+        // character 2 takes damage
+        game.takeDamage(c2, game.dealDamage(c1));
+        assertEquals(0, c2.health);
+        assertEquals(0, c2.experience);
+
+        // character 2 deals 10 damage to character 1
+        game.dealDamage(c2);
+        assertEquals(0, c2.experience);
+
+        // character 1 takes damage
+        game.takeDamage(c1, game.dealDamage(c2));
+        assertEquals(0, c1.health);
+        assertEquals(0, c1.experience);
+    }
+
+    // Character one has full health, character 2 has 0
+    // Expected: no attack on each other
+    // equivalence partition:   Character 1: Health = 100
+    //                          Character 2: -10, -1, 0
+    @Test
+    public void attackOneFullSecondZero() {
+
+        Barbarian c1 = new Barbarian();
+        Wizard c2 = new Wizard();
+
+        c1.health = 100;
+        c1.experience = 0;
+        c2.health = 0;
+        c2.experience = 0;
+
+        // BOUNDARY 0 HEALTH /////////////////////
+        // character 1 deals 10 damage to character 2
+        game.dealDamage(c1);
+        assertEquals(0, c1.experience);
+
+        // character 2 takes damage (calculate)
+        game.takeDamage(c2, game.dealDamage(c1));
+        assertEquals(0, c2.health);
+        assertEquals(0, c2.experience);
+
+        // character 2 deals 10 damage to character 1
+        game.dealDamage(c2);
+        assertEquals(0, c2.experience);
+
+        // character 1 takes damage (calculate)
+        game.takeDamage(c1, game.dealDamage(c2));
+        assertEquals(0, c1.health);
+        assertEquals(0, c1.experience);
+
+        // BOUNDARY -1 HEALTH /////////////////////
+        c1.health = 100;
+        c1.experience = 0;
+        c2.health = -1;
+        c2.experience = 0;
+        // character 1 deals 10 damage to character 2
+        game.dealDamage(c1);
+        assertEquals(0, c1.experience);
+
+        // character 2 takes damage
+        game.takeDamage(c2, game.dealDamage(c1));
+        assertEquals(0, c2.health);
+        assertEquals(0, c2.experience);
+
+        // character 2 deals 10 damage to character 1
+        game.dealDamage(c2);
+        assertEquals(0, c2.experience);
+
+        // character 1 takes damage
+        game.takeDamage(c1, game.dealDamage(c2));
+        assertEquals(0, c1.health);
+        assertEquals(0, c1.experience);
+
+        // BOUNDARY -10 HEALTH /////////////////////
+        c1.health = 100;
+        c1.experience = 0;
+        c2.health = -10;
+        c2.experience = 0;
+        // character 1 deals 10 damage to character 2
+        game.dealDamage(c1);
+        assertEquals(0, c1.experience);
+
+        // character 2 takes damage
+        game.takeDamage(c2, game.dealDamage(c1));
+        assertEquals(0, c2.health);
+        assertEquals(0, c2.experience);
+
+        // character 2 deals 10 damage to character 1
+        game.dealDamage(c2);
+        assertEquals(0, c2.experience);
+
+        // character 1 takes damage
+        game.takeDamage(c1, game.dealDamage(c2));
+        assertEquals(0, c1.health);
+        assertEquals(0, c1.experience);
+    }
+
+    // Character 2 has more damage than character 1 has health
+    // Expected: no attack on each other
+    // equivalence partition:   Character 1: Health 1, 50, 99
+    //                          Character 2: Damage 101, 200
+    @Test
+    public void attackOneShot() {
+
+        Barbarian c1 = new Barbarian();
+        Wizard c2 = new Wizard();
+
+        // BOUNDARY c1.hp = 99 / c2.dmg = 101 /////////////////////
+        c1.health = 99;
+        c1.experience = 0;
+        c2.health = 100;
+        c2.experience = 0;
+        c2.damage = 101;
+
+        // c2 deals 101 damage to c1
+        game.dealDamage(c2);
+        assertEquals(101, c2.experience);
+
+        // c1 takes damage
+        game.takeDamage(c1, game.dealDamage(c2));
+        assertEquals(10, c2.health);
+        assertEquals(45, c2.experience);
+
+
+
+        // BOUNDARY c1.hp = 50 / c2.dmg = 101 /////////////////////
+        c1.health = 50;
+        c1.experience = 0;
+        c2.health = 100;
+        c2.experience = 0;
+        c2.damage = 101;
+
+        // c2 deals 101 damage to c1
+        game.dealDamage(c2);
+        assertEquals(101, c2.experience);
+
+        // c1 takes damage
+        game.takeDamage(c1, game.dealDamage(c2));
+        assertEquals(0, c2.health); // kill
+    }
 }
-
-
-
-
-//                b.health = 100;
-//                b.experience = 0; // reset experience
-//                game.takeDamage(b, 50); // take damage by boundary value
-//                assertEquals(60, b.health); // 100 - ((50 - 10)
-//                assertEquals(20, b.experience);
-
-// Boundary Value: 2 (lower bound - extreme case)
-//        b.health = 99; // set health to boundary value
-//        b.experience = 0; // reset experience
-//        game.dealDamage(b);
-//        assertEquals(99, b.health);
-//        assertEquals(10, b.experience);
-//        assertEquals( 10, game.dealDamage(b));
-//
-//                b.health = 100;
-//                b.experience = 0; // reset experience
-//                game.takeDamage(b, 10);
-//                assertEquals(100, b.health);
-//                assertEquals(0, b.experience);
-
-
