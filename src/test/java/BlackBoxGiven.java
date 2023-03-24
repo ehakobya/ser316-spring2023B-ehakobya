@@ -130,4 +130,36 @@ public class BlackBoxGiven {
         assertEquals(10, b.experience);
         assertEquals( 20, game.dealDamage(b));
     }
+
+    // double damage when health below 10
+    // equivalence partition 1 <= health < 10
+    @Test
+    public void dealtDamageNoNormalExperienceNoDamage() {
+
+        Barbarian b = new Barbarian();
+
+        // Boundary Value: 9 (upper boundary)
+        b.health = 0; // set health to boundary value
+        b.experience = 0; // reset experience
+        game.dealDamage(b);
+        assertEquals(0, b.health);
+        assertEquals(0, b.experience);
+        assertEquals( 0, game.dealDamage(b));
+
+        // Boundary Value: 5 (one below upper bound)
+        b.health = -1; // set health to boundary value
+        b.experience = 0; // reset experience
+        game.dealDamage(b);
+        assertEquals(-1, b.health);
+        assertEquals(0, b.experience);
+        assertEquals( 0, game.dealDamage(b));
+
+        // Boundary Value: 2 (lower bound - extreme case)
+        b.health = -10; // set health to boundary value
+        b.experience = 0; // reset experience
+        game.dealDamage(b);
+        assertEquals(-10, b.health);
+        assertEquals(0, b.experience);
+        assertEquals( 0, game.dealDamage(b));
+    }
 }
