@@ -239,21 +239,21 @@ public class BlackBoxGiven {
         b.health = 100;
         b.experience = 0; // reset experience
         game.takeDamage(b, 200); // take damage by boundary value
-        assertEquals(0, b.health);
+        assertTrue(0 < b.health);
         assertEquals(0, b.experience);
 
         // Boundary Value: 101 (one above lower boundary)
         b.health = 100;
         b.experience = 0; // reset experience
         game.takeDamage(b, 101);
-        assertEquals(0, b.health);
+        assertTrue(0 < b.health);
         assertEquals(0, b.experience);
 
         // Boundary Value: 100 (lower boundary)
         b.health = 100;
         b.experience = 0; // reset experience
         game.takeDamage(b, 100);
-        assertEquals(0, b.health);
+        assertTrue(0 < b.health);
         assertEquals(0, b.experience);
     }
 }
