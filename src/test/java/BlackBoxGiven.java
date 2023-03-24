@@ -50,8 +50,10 @@ public class BlackBoxGiven {
     public void dealtDamageNormalExperience() {
 
         Barbarian b = new Barbarian();
+
         // Boundary Value: 100 (upper boundary)
         game.dealDamage(b); // deal some damage
+        assertEquals(0, b.experience); // make sure experience is at 0
         assertEquals(100, b.health);
         assertEquals(10, b.experience);
         assertEquals(10, game.dealDamage(b));
@@ -87,5 +89,45 @@ public class BlackBoxGiven {
         assertEquals(10, b.health);
         assertEquals(10, b.experience);
         assertEquals( 10, game.dealDamage(b));
+    }
+
+    // double damage when health below 10
+    // equivalence partition 1 <= health < 10
+    @Test
+    public void dealtDamageNormalExperienceDoubleDamage() {
+
+        Barbarian b = new Barbarian();
+
+        // Boundary Value: 9 (upper boundary)
+        b.health = 9; // set health to boundary value
+        b.experience = 0; // reset experience
+        game.dealDamage(b);
+        assertEquals(9, b.health);
+        assertEquals(10, b.experience);
+        assertEquals( 20, game.dealDamage(b));
+
+        // Boundary Value: 5 (middle)
+        b.health = 5; // set health to boundary value
+        b.experience = 0; // reset experience
+        game.dealDamage(b);
+        assertEquals(5, b.health);
+        assertEquals(10, b.experience);
+        assertEquals( 20, game.dealDamage(b));
+
+        // Boundary Value: 2 (one above lower boundary)
+        b.health = 2; // set health to boundary value
+        b.experience = 0; // reset experience
+        game.dealDamage(b);
+        assertEquals(2, b.health);
+        assertEquals(10, b.experience);
+        assertEquals( 20, game.dealDamage(b));
+
+        // Boundary Value: 1 (lower boundary)
+        b.health = 1; // set health to boundary value
+        b.experience = 0; // reset experience
+        game.dealDamage(b);
+        assertEquals(1, b.health);
+        assertEquals(10, b.experience);
+        assertEquals( 20, game.dealDamage(b));
     }
 }
