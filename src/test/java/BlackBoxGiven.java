@@ -46,7 +46,7 @@ public class BlackBoxGiven {
 
     // normal experience when healthy
     // equivalence partition 10 <= health <= 100
-//    @Test
+    @Test
     public void dealtDamageNormalExperience() {
 
         Barbarian b = new Barbarian();
@@ -88,7 +88,7 @@ public class BlackBoxGiven {
 
     // double damage when health below 10
     // equivalence partition 1 <= health < 10
-//    @Test
+    @Test
     public void dealtDamageNormalExperienceDoubleDamage() {
 
         Barbarian b = new Barbarian();
@@ -125,7 +125,7 @@ public class BlackBoxGiven {
 
     // double damage when health below 10
     // equivalence partition 1 <= health < 10
-//    @Test
+    @Test
     public void dealtDamageNoExperienceNoDamage() {
 
         Barbarian b = new Barbarian();
@@ -154,7 +154,7 @@ public class BlackBoxGiven {
 
     // take damage when protection > damage
     // equivalence partition 1 <= Damage < Protection(10)
-//    @Test
+    @Test
     public void takenDamageProtectionGreaterThanDamage() {
 
         Barbarian b = new Barbarian();
@@ -191,7 +191,7 @@ public class BlackBoxGiven {
 
     // take damage when protection <= damage
     // equivalence partition protection(10) <= 10
-//    @Test
+    @Test
     public void takenDamageProtectionLessThanDamage() {
 
         Barbarian b = new Barbarian();
@@ -220,7 +220,7 @@ public class BlackBoxGiven {
 
     // health below zero case
     // equivalence partition: Protection <= Health <= Damage
-//    @Test
+    @Test
     public void takenDamageHealthBelowZero() {
 
         Barbarian b = new Barbarian();
@@ -233,7 +233,7 @@ public class BlackBoxGiven {
     }
 
     // Two character attack with normal (above damage) health
-//    @Test
+    @Test
     public void attackNormalHealth() {
 
         Barbarian c1 = new Barbarian();
@@ -277,7 +277,7 @@ public class BlackBoxGiven {
     }
 
     // Two character attack with zero health
-//    @Test
+    @Test
     public void attackZeroHealth() {
 
         Barbarian c1 = new Barbarian();
@@ -295,7 +295,7 @@ public class BlackBoxGiven {
         assertEquals(1, c2.protection);
     }
 
-//    @Test
+    @Test
     public void attackAttackerFullOpponentZeroHealth() {
 
         Barbarian c1 = new Barbarian();
@@ -306,10 +306,11 @@ public class BlackBoxGiven {
         c2.health = 0;
         c2.damage = 10;
         game.attack(c1, c2); // c1 attacks c2
+        // **** ERROR FOUND HERE CLASS[4] FAILS TO NOT ATTACK ****
         assertEquals(0, c1.experience);
     }
 
-//        @Test
+        @Test
     public void attackAttackerZeroOpponentFullHealth() {
 
         Barbarian c1 = new Barbarian();
@@ -321,8 +322,7 @@ public class BlackBoxGiven {
         c2.damage = 10;
         game.attack(c1, c2); // c1 attacks c2
         assertEquals(0, c1.experience);
+        // **** ERROR FOUND HERE CLASS[4] FAILS TO NOT RECEIVE EXPERIENCE ****
         assertEquals(0, c2.experience);
     }
 }
-
-// **** ERROR FOUND HERE CLASS[X] ****
