@@ -231,4 +231,98 @@ public class BlackBoxGiven {
         game.takeDamage(b, 15); // take damage by boundary value
         assertEquals(0, b.health);
     }
+
+    // Two character attack with normal (above damage) health
+//    @Test
+    public void attackNormalHealth() {
+
+        Barbarian c1 = new Barbarian();
+        Wizard c2 = new Wizard();
+
+        // Boundary Value: 11, 11 (lower boundary)
+        c1.health = 11;
+        c1.damage = 10;
+        c2.health = 11;
+        c2.damage = 10;
+        game.attack(c1, c2); // c1 attacks c2
+        // **** ERROR FOUND HERE CLASS[1, 2, 4] DOES NOT ADD DAMAGE TO C1 WHEN ATTACKING C2 ****
+        assertEquals(10, c1.experience); // from dealing damage
+
+        // Boundary Value: 11, 28
+        c1.health = 11;
+        c1.damage = 10;
+        c2.health = 28;
+        c2.damage = 10;
+        game.attack(c1, c2); // c1 attacks c2
+        // **** ERROR FOUND HERE CLASS[1, 2, 4] DOES NOT ADD DAMAGE TO C1 WHEN ATTACKING C2 ****
+        assertEquals(20, c1.experience); // from dealing damage
+
+        // Boundary Value: 100
+        c1.health = 100;
+        c1.damage = 10;
+        c2.health = 100;
+        c2.damage = 10;
+        game.attack(c1, c2); // c1 attacks c2
+        // **** ERROR FOUND HERE CLASS[1, 2, 4] DOES NOT ADD DAMAGE TO C1 WHEN ATTACKING C2 ****
+        assertEquals(30, c1.experience); // from dealing damage
+
+        // Boundary Value: 100
+        c1.health = 100;
+        c1.damage = 10;
+        c2.health = 100;
+        c2.damage = 10;
+        game.attack(c1, c2); // c1 attacks c2
+        // **** ERROR FOUND HERE CLASS[1, 2, 4] DOES NOT ADD DAMAGE TO C1 WHEN ATTACKING C2 ****
+        assertEquals(40, c1.experience); // from dealing damage
+    }
+
+    // Two character attack with zero health
+//    @Test
+    public void attackZeroHealth() {
+
+        Barbarian c1 = new Barbarian();
+        Wizard c2 = new Wizard();
+
+        // Boundary Value: 11, 11 (lower boundary)
+        c1.health = 0;
+        c1.damage = 10;
+        c2.health = 0;
+        c2.damage = 10;
+        game.attack(c1, c2); // c1 attacks c2
+        assertEquals(0, c1.experience);
+        // **** ERROR FOUND HERE CLASS[4] ADDS EXPERIENCE TO THE OPPONENT EVEN THOUGH ATTACH SHOULD NOT HAPPEN ****
+        assertEquals(0, c2.experience);
+        assertEquals(1, c2.protection);
+    }
+
+//    @Test
+    public void attackAttackerFullOpponentZeroHealth() {
+
+        Barbarian c1 = new Barbarian();
+        Wizard c2 = new Wizard();
+
+        c1.health = 100;
+        c1.damage = 10;
+        c2.health = 0;
+        c2.damage = 10;
+        game.attack(c1, c2); // c1 attacks c2
+        assertEquals(0, c1.experience);
+    }
+
+//        @Test
+    public void attackAttackerZeroOpponentFullHealth() {
+
+        Barbarian c1 = new Barbarian();
+        Wizard c2 = new Wizard();
+
+        c1.health = 0;
+        c1.damage = 10;
+        c2.health = 100;
+        c2.damage = 10;
+        game.attack(c1, c2); // c1 attacks c2
+        assertEquals(0, c1.experience);
+        assertEquals(0, c2.experience);
+    }
 }
+
+// **** ERROR FOUND HERE CLASS[X] ****
