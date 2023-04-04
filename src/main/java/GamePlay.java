@@ -78,8 +78,16 @@ public class GamePlay implements GamePlayInterface {
      */
     @Override
     public int dealDamage(Character character) {
-    System.out.println("Not Implemented here, your job in assign 3");
-    return 1;
+        if (character.health > 0) {
+            character.experience += character.damage;
+            if (character.health < 10) {
+                return 2 * character.damage;
+            } else {
+                return character.damage;
+            }
+        } else {
+            return 0;
+        }
     }
 
     /**
@@ -102,8 +110,18 @@ public class GamePlay implements GamePlayInterface {
      */
     @Override
     public int takeDamage(Character character, int blowDamage) {
-        System.out.println("Not Implemented here your job in assign 3");
-        return 1;
+        int damageTaken = blowDamage - character.protection;
+        if (damageTaken < 0) {
+            character.experience = character.experience - damageTaken;
+            character.health = character.health - damageTaken / 2;
+        } else {
+            character.experience = character.experience + damageTaken / 2;
+            character.health = character.health - damageTaken;
+        }
+        if (character.health < 0) {
+            character.health = 0;
+        }
+        return damageTaken;
     }
 
     /**
@@ -183,7 +201,25 @@ public class GamePlay implements GamePlayInterface {
      */
     @Override
     public void attack(Character character, Character opponent) {
-        System.out.println("Not Implemented here your job in assign 3");
+
+        if (character.health > 0 && opponent.health > 0) {
+
+            int dmg = this.dealDamage(character);
+            this.takeDamage(opponent, dmg);
+
+            if (opponent.health > 0 && character.health > 0) {
+
+                dmg = this.dealDamage(opponent);
+                this.takeDamage(character, dmg);
+
+                if (character.health > 0) {
+                    this.levelUp(character);
+                }
+                if (opponent.health > 0) {
+                    this.levelUp(opponent);
+                }
+            }
+        }
     }
 
     /**
@@ -205,25 +241,21 @@ public class GamePlay implements GamePlayInterface {
     @Override
     public int play() {
         int startingExperience = player.experience;
-        for (Character opponent : Opponents) {
-            //determine order of attack and give experience points for attacking first
+        for (Character opponent : Opponents)
+        {
             Character[] orderOfAttack = new Character[2];
             if (player.speed > opponent.speed) {
                 orderOfAttack[0] = player;
                 orderOfAttack[1] = opponent;
                 player.experience += Math.ceil(player.speed - opponent.speed);
-                } else {
+                }
+            else {
                 orderOfAttack[1] = opponent;
                 orderOfAttack[0] = player;
                 opponent.experience += Math.ceil(opponent.speed - player.speed);
              }
-
-            // attack in order
             attack(orderOfAttack[0], orderOfAttack[1]);
-            
         }
-
-        // remove opponents that have <= 0 health
         for (int o=0; o < Opponents.size(); o++) {
             if (Opponents.get(o).health <= 0) {
                 System.out.println(Opponents.get(o).getClass().getName() + " removed\n");
@@ -231,9 +263,6 @@ public class GamePlay implements GamePlayInterface {
                 o--;
             }
         }
-
-
         return player.experience - startingExperience;
     }
-    
 }
