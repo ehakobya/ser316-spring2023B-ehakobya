@@ -1,5 +1,15 @@
+/**
+File: GamePlay.java
+Author: Dr. Mehlhase
+Date: unkown
+Description: provides gameplay logic for characters to attack each other.
+*/
 import java.util.*;
 
+/**
+ Class: GamePlay
+ Description: provides gameplay logic for characters to attack each other.
+ */
 public class GamePlay implements GamePlayInterface {
     
     public Character player;
