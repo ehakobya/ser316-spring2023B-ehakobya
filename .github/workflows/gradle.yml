@@ -11,7 +11,7 @@ on:
   push:
     branches: [ "main", "Whitebox", "StaticAnalysis", "Review", "Blackbox" ]
   pull_request:
-    branches: [ "main", "Whitebox", "StaticAnalysis", "Review", "Blackbox" ]
+    branches: [ "main" ]
 
 permissions:
   contents: read
