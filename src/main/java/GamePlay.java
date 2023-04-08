@@ -1,5 +1,15 @@
+/**
+File: GamePlay.java
+Author: Dr. Mehlhase
+Date: unkown
+Description: provides gameplay logic for characters to attack each other.
+*/
 import java.util.*;
 
+/**
+ Class: GamePlay
+ Description: provides gameplay logic for characters to attack each other.
+ */
 public class GamePlay implements GamePlayInterface {
 
     public Character player;
@@ -154,7 +164,6 @@ public class GamePlay implements GamePlayInterface {
                 character.damage += 10;
                 character.speed = character.speed + 0.25;
                 character.protection += 2;
-
             }
             //SER316 TASK 2 SPOTBUGS FIX
             else if (character.getClass().getName().equals(Bard.class.getName())) {

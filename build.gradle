@@ -30,7 +30,6 @@ jacoco {
     reportsDirectory = layout.buildDirectory.dir('customJacocoReportDir')
 }
 
-
 jacocoTestReport {
     reports {
         xml.required = false
