@@ -4,12 +4,13 @@
  * Date: 04/03/2023<br>
  * Description: Test driven development<br>
  */
-
-import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
+import org.junit.Test;
+
+
 /**
- * Class: TDD<br>
+ * Class: TDD.<br>
  * Description: Test driven development class.
  */
 public class TDD {
@@ -22,7 +23,7 @@ public class TDD {
     }
 
     /**
-     * Method: dealtDamageNormalExperience()<br>
+     * Method: dealtDamageNormalExperience().<br>
      * Type: Test method<br>
      * Inputs: None<br>
      * Returns: Void<br>
@@ -68,7 +69,7 @@ public class TDD {
     }
 
     /**
-     * Method: dealtDamageNormalExperienceDoubleDamage()<br>
+     * Method: dealtDamageNormalExperienceDoubleDamage().<br>
      * Type: Test method<br>
      * Inputs: None<br>
      * Returns: Void<br>
@@ -110,7 +111,7 @@ public class TDD {
 
 
     /**
-     * Method: dealtDamageNoExperienceNoDamage()<br>
+     * Method: dealtDamageNoExperienceNoDamage().<br>
      * Type: Test method<br>
      * Inputs: None<br>
      * Returns: Void<br>
@@ -145,7 +146,7 @@ public class TDD {
 
 
     /**
-     * Method: takenDamageProtectionGreaterThanDamage()<br>
+     * Method: takenDamageProtectionGreaterThanDamage().<br>
      * Type: Test method<br>
      * Inputs: None<br>
      * Returns: Void<br>
@@ -184,7 +185,7 @@ public class TDD {
     }
 
     /**
-     * Method: takenDamageProtectionLessThanDamage()<br>
+     * Method: takenDamageProtectionLessThanDamage().<br>
      * Type: Test method<br>
      * Inputs: None<br>
      * Returns: Void<br>
@@ -216,7 +217,7 @@ public class TDD {
     }
 
     /**
-     * Method: takenDamageHealthBelowZero()<br>
+     * Method: takenDamageHealthBelowZero().<br>
      * Type: Test method<br>
      * Inputs: None<br>
      * Returns: Void<br>
@@ -235,7 +236,7 @@ public class TDD {
     }
 
     /**
-     * Method: attackNormalHealth()<br>
+     * Method: attackNormalHealth().<br>
      * Type: Test method<br>
      * Inputs: None<br>
      * Returns: Void<br>
@@ -253,7 +254,7 @@ public class TDD {
     }
 
     /**
-     * Method: attackAttackerFullOpponentZeroHealth()<br>
+     * Method: attackAttackerFullOpponentZeroHealth().<br>
      * Type: Test method<br>
      * Inputs: None<br>
      * Returns: Void<br>
@@ -277,7 +278,7 @@ public class TDD {
     }
 
     /**
-     * Method: attackZeroHealth()<br>
+     * Method: attackZeroHealth().<br>
      * Type: Test method<br>
      * Inputs: None<br>
      * Returns: Void<br>

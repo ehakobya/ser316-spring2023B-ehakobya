@@ -1,8 +1,9 @@
+import static org.junit.Assert.*;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
 
 public class WhiteBoxGiven {
 
@@ -16,7 +17,7 @@ public class WhiteBoxGiven {
     }
 
     /**
-     * Method: equalDP()<br>
+     * Method: equalDP().<br>
      * Type: Test method<br>
      * Inputs: None<br>
      * Returns: Void<br>
@@ -79,7 +80,7 @@ public class WhiteBoxGiven {
         assertEquals(0, c2.health);
 
         assertEquals(10, c1.experience);
-        assertEquals(7,c2.experience);
+        assertEquals(7, c2.experience);
 
         assertEquals(1, c1.level);
         assertEquals(1, c2.level);
@@ -93,7 +94,7 @@ public class WhiteBoxGiven {
      * Description: Tests character gaining experience.<br>
      */
     @Test
-    public void playGainExperience(){
+    public void playGainExperience() {
         Character c1 = new Barbarian();
         Character c2 = new Wizard();
 
@@ -121,16 +122,16 @@ public class WhiteBoxGiven {
      * Description: Tests a character being removed when dead.<br>
      */
     @Test
-    public void removeOpponent(){
+    public void removeOpponent() {
         Character c1 = new Barbarian();
         Character c2 = new Wizard();
 
         GamePlay game = new GamePlay(c2, c1);
 
-        assertEquals(1, game.Opponents.size());
+        assertEquals(1, game.opponents.size());
         assertTrue(game.removeOpponent(c1));
         assertFalse(game.removeOpponent(c1));
-        assertEquals(0, game.Opponents.size());
+        assertEquals(0, game.opponents.size());
     }
 
     /**
@@ -141,15 +142,15 @@ public class WhiteBoxGiven {
      * Description: Tests character being added to opponent list.<br>
      */
     @Test
-    public void addedOpponent(){
+    public void addedOpponent() {
         Character c1 = new Barbarian();
         Character c2 = new Wizard();
 
         GamePlay game = new GamePlay(c2, c1);
-        assertEquals(1, game.Opponents.size());
+        assertEquals(1, game.opponents.size());
         Character bar = new Barbarian();
         assertTrue(game.addOpponent(bar));
-        assertEquals(2, game.Opponents.size());
+        assertEquals(2, game.opponents.size());
     }
 
     /**
