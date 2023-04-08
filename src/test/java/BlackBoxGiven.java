@@ -1,10 +1,9 @@
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-
 import java.lang.reflect.Constructor;
 import java.util.Arrays;
 import java.util.Collection;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 import static org.junit.Assert.*;
 
@@ -22,11 +21,11 @@ public class BlackBoxGiven {
     @Parameterized.Parameters
     public static Collection<Object[]> cartClassUnderTest() {
         Object[][] classes = {
-            {GamePlay1.class},
-            {GamePlay2.class},
-            {GamePlay3.class},
-            {GamePlay4.class},
-            {GamePlay5.class}
+                {GamePlay1.class},
+                {GamePlay2.class},
+                {GamePlay3.class},
+                {GamePlay4.class},
+                {GamePlay5.class}
         };
         return Arrays.asList(classes);
     }
@@ -61,21 +60,21 @@ public class BlackBoxGiven {
         b.experience = 0; // reset experience
         game.dealDamage(b);
         assertEquals(10, b.experience);
-        assertEquals( 10, game.dealDamage(b));
+        assertEquals(10, game.dealDamage(b));
 
         // Boundary Value: 50 (middle)
         b.health = 50; // set health to boundary value
         b.experience = 0; // reset experience
         game.dealDamage(b);
         assertEquals(10, b.experience);
-        assertEquals( 10, game.dealDamage(b));
+        assertEquals(10, game.dealDamage(b));
 
         // Boundary Value: 11 (one above lower boundary)
         b.health = 11; // set health to boundary value
         b.experience = 0; // reset experience
         game.dealDamage(b);
         assertEquals(10, b.experience);
-        assertEquals( 10, game.dealDamage(b));
+        assertEquals(10, game.dealDamage(b));
 
         // **** ERROR FOUND HERE CLASS[0] EXPECTS 20 INSTEAD OF 10 ****
         // Boundary Value: 10 (lower boundary)
@@ -93,34 +92,35 @@ public class BlackBoxGiven {
 
         Barbarian b = new Barbarian();
 
-        // **** ERROR FOUND HERE CLASS[2] & [3] EXPECTS 10 INSTEAD OF 20 FOR DAMAGE BELOW 10 HEALTH ****
+        // **** ERROR FOUND HERE CLASS[2] & [3] EXPECTS
+        // 10 INSTEAD OF 20 FOR DAMAGE BELOW 10 HEALTH ****
         // Boundary Value: 9 (upper boundary)
         b.health = 9; // set health to boundary value
         b.experience = 0; // reset experience
         game.dealDamage(b);
         assertEquals(10, b.experience);
-        assertEquals( 20, game.dealDamage(b));
+        assertEquals(20, game.dealDamage(b));
 
         // Boundary Value: 5 (middle)
         b.health = 5; // set health to boundary value
         b.experience = 0; // reset experience
         game.dealDamage(b);
         assertEquals(10, b.experience);
-        assertEquals( 20, game.dealDamage(b));
+        assertEquals(20, game.dealDamage(b));
 
         // Boundary Value: 2 (one above lower boundary)
         b.health = 2; // set health to boundary value
         b.experience = 0; // reset experience
         game.dealDamage(b);
         assertEquals(10, b.experience);
-        assertEquals( 20, game.dealDamage(b));
+        assertEquals(20, game.dealDamage(b));
 
         // Boundary Value: 1 (lower boundary)
         b.health = 1; // set health to boundary value
         b.experience = 0; // reset experience
         game.dealDamage(b);
         assertEquals(10, b.experience);
-        assertEquals( 20, game.dealDamage(b));
+        assertEquals(20, game.dealDamage(b));
     }
 
     // double damage when health below 10
@@ -135,21 +135,21 @@ public class BlackBoxGiven {
         b.experience = 0; // reset experience
         game.dealDamage(b);
         assertEquals(0, b.experience);
-        assertEquals( 0, game.dealDamage(b));
+        assertEquals(0, game.dealDamage(b));
 
         // Boundary Value: -1 (one below upper bound)
         b.health = -1; // set health to boundary value
         b.experience = 0; // reset experience
         game.dealDamage(b);
         assertEquals(0, b.experience);
-        assertEquals( 0, game.dealDamage(b));
+        assertEquals(0, game.dealDamage(b));
 
         // Boundary Value: -10 (lower bound - extreme case)
         b.health = -10; // set health to boundary value
         b.experience = 0; // reset experience
         game.dealDamage(b);
         assertEquals(0, b.experience);
-        assertEquals( 0, game.dealDamage(b));
+        assertEquals(0, game.dealDamage(b));
     }
 
     // take damage when protection > damage
@@ -203,7 +203,7 @@ public class BlackBoxGiven {
         assertEquals(60, b.health); // 100 - ((50 - 10))
         assertEquals(20, b.experience);
 
-//        // Boundary Value: 11 (one above lower boundary)
+        // Boundary Value: 11 (one above lower boundary)
         b.health = 100;
         b.experience = 0; // reset experience
         game.takeDamage(b, 11);
@@ -290,7 +290,8 @@ public class BlackBoxGiven {
         c2.damage = 10;
         game.attack(c1, c2); // c1 attacks c2
         assertEquals(0, c1.experience);
-        // **** ERROR FOUND HERE CLASS[4] ADDS EXPERIENCE TO THE OPPONENT EVEN THOUGH ATTACH SHOULD NOT HAPPEN ****
+        // **** ERROR FOUND HERE CLASS[4] ADDS EXPERIENCE TO THE
+        // OPPONENT EVEN THOUGH ATTACH SHOULD NOT HAPPEN ****
         assertEquals(0, c2.experience);
         assertEquals(1, c2.protection);
     }
@@ -310,7 +311,7 @@ public class BlackBoxGiven {
         assertEquals(0, c1.experience);
     }
 
-        @Test
+    @Test
     public void attackAttackerZeroOpponentFullHealth() {
 
         Barbarian c1 = new Barbarian();
