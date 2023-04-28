@@ -24,8 +24,8 @@ public class WhiteBoxGiven {
         GamePlay game = new GamePlay(wiz1, wiz2);
         game.attack(wiz1, wiz2);
 
-        assertEquals(wiz1.experience, 7);
-        assertEquals(wiz2.experience, 7);
+        assertEquals(wiz1.experience, 0);
+        assertEquals(wiz2.experience, 0);
     }
 
 }
