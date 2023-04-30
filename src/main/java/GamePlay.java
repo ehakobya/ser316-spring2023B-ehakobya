@@ -4,6 +4,7 @@ Author: Dr. Mehlhase
 Date: unkown
 Description: provides gameplay logic for characters to attack each other.
 */
+
 import java.util.*;
 
 /**
@@ -97,62 +98,77 @@ public class GamePlay implements GamePlayInterface {
 
     @Override
     public boolean levelUp(Character character) {
-        if (character.experience >= character.pointsPerLevel) {
-            if (character.experience == character.pointsPerLevel) {
-                character.experience += 5;
+        if (character.getExperience() >= character.getPointsPerLevel()) {
+            if (character.getExperience() == character.getPointsPerLevel()) {
+                character.setExperience(character.getExperience() + 5);
             }
+            character.setLevel(character.getLevel() + 1);
+            character.setPointsPerLevel(character.getPointsPerLevel() * 2);
+            character.setHealth(100); // level up resets health
+            StrategyLevelUp.levelUp(character);
 
-            character.level++;
-            character.pointsPerLevel *= 2; // need more points to level up next time
-            character.health = 100; // level up resets health
-
-            //SER316 TASK 2 SPOTBUGS FIX
-            if (character.getClass().getName().equals(Barbarian.class.getName())) {
-                character.damage += 10;
-                character.speed = character.speed + 0.25;
-                character.protection += 2;
-            }
-            //SER316 TASK 2 SPOTBUGS FIX
-            else if (character.getClass().getName().equals(Bard.class.getName())) {
-                character.damage += character.damage / 2;
-                character.speed += 0.5;
-                character.protection += character.protection / 2;
-            }
-            //SER316 TASK 2 SPOTBUGS FIX
-            else if (character.getClass().getName().equals(Druid.class.getName())) {
-                character.damage += 10;
-                character.speed += 0.25;
-                character.protection += 2;
-            }
-            //SER316 TASK 2 SPOTBUGS FIX
-            else if (character.getClass().getName().equals(Ranger.class.getName())) {
-                character.damage += character.damage % 10;
-                character.speed += 0.5;
-                character.protection += character.protection % 5;
-            }
-            //SER316 TASK 2 SPOTBUGS FIX
-            else if (character.getClass().getName().equals(Rogue.class.getName())) {
-                character.damage += character.damage / 3;
-                character.speed += 1.25;
-                character.protection += 3;
-            }
-            //SER316 TASK 2 SPOTBUGS FIX
-            else if (character.getClass().getName().equals(Wizard.class.getName())) {
-                character.damage += 5;
-                character.speed += 1;
-                character.protection += 1;
-            }
-            //SER316 TASK 2 SPOTBUGS FIX
-            else {
-                character.damage++;
-                character.speed += 0.25;
-                character.protection++;
-            }
-            levelUp(character);
+            return true;
         }
-        //SER316 TASK 2 SPOTBUGS FIX
         return false;
     }
+//    @Override
+//    public boolean levelUp(Character character) {
+//        if (character.experience >= character.pointsPerLevel) {
+//            if (character.experience == character.pointsPerLevel) {
+//                character.experience += 5;
+//            }
+//
+//            character.level++;
+//            character.pointsPerLevel *= 2; // need more points to level up next time
+//            character.health = 100; // level up resets health
+//
+//            //SER316 TASK 2 SPOTBUGS FIX
+//            if (character.getClass().getName().equals(Barbarian.class.getName())) {
+//                character.damage += 10;
+//                character.speed = character.speed + 0.25;
+//                character.protection += 2;
+//            }
+//            //SER316 TASK 2 SPOTBUGS FIX
+//            else if (character.getClass().getName().equals(Bard.class.getName())) {
+//                character.damage += character.damage / 2;
+//                character.speed += 0.5;
+//                character.protection += character.protection / 2;
+//            }
+//            //SER316 TASK 2 SPOTBUGS FIX
+//            else if (character.getClass().getName().equals(Druid.class.getName())) {
+//                character.damage += 10;
+//                character.speed += 0.25;
+//                character.protection += 2;
+//            }
+//            //SER316 TASK 2 SPOTBUGS FIX
+//            else if (character.getClass().getName().equals(Ranger.class.getName())) {
+//                character.damage += character.damage % 10;
+//                character.speed += 0.5;
+//                character.protection += character.protection % 5;
+//            }
+//            //SER316 TASK 2 SPOTBUGS FIX
+//            else if (character.getClass().getName().equals(Rogue.class.getName())) {
+//                character.damage += character.damage / 3;
+//                character.speed += 1.25;
+//                character.protection += 3;
+//            }
+//            //SER316 TASK 2 SPOTBUGS FIX
+//            else if (character.getClass().getName().equals(Wizard.class.getName())) {
+//                character.damage += 5;
+//                character.speed += 1;
+//                character.protection += 1;
+//            }
+//            //SER316 TASK 2 SPOTBUGS FIX
+//            else {
+//                character.damage++;
+//                character.speed += 0.25;
+//                character.protection++;
+//            }
+//            levelUp(character);
+//        }
+//        //SER316 TASK 2 SPOTBUGS FIX
+//        return false;
+//    }
 
     @Override
     public void attack(Character character, Character opponent) {
